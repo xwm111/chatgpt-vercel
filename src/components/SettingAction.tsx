@@ -65,8 +65,8 @@ export default function SettingAction(props: {
               }}
             >
               <option value="gpt-3.5-turbo">gpt-3.5-turbo(4k)</option>
-              <option value="gpt-4">gpt-4(8k)</option>
-              <option value="gpt-4-32k">gpt-4(32k)</option>
+              {/* <option value="gpt-4">gpt-4(8k)</option>
+              <option value="gpt-4-32k">gpt-4(32k)</option> */}
             </select>
           </SettingItem>
           {/* <SettingItem icon="i-carbon:user-online" label="系统角色指令">
@@ -82,7 +82,7 @@ export default function SettingAction(props: {
               }}
             />
           </SettingItem> */}
-          <SettingItem icon="i-carbon:data-enrichment" label="思维发散程度">
+          {/* <SettingItem icon="i-carbon:data-enrichment" label="思维发散程度">
             <input
               type="range"
               min={0}
@@ -98,7 +98,7 @@ export default function SettingAction(props: {
                 })
               }}
             />
-          </SettingItem>
+          </SettingItem> */}
           <SettingItem
             icon="i-carbon:save-image"
             label="记录对话内容，刷新不会消失"
