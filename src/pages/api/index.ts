@@ -3,9 +3,8 @@ import type { ParsedEvent, ReconnectInterval } from "eventsource-parser"
 import { createParser } from "eventsource-parser"
 import type { ChatMessage, Model } from "~/types"
 import { countTokens } from "~/utils/tokens"
-import { splitKeys, randomKey, fetchWithTimeout } from "~/utils"
+import { splitKeys, randomKey, fetchWithTimeout, dateFormat } from "~/utils"
 import { defaultMaxInputTokens, defaultModel } from "~/system"
-
 export const config = {
   runtime: "edge",
   /**
@@ -82,9 +81,29 @@ export const post: APIRoute = async context => {
       password,
       model = defaultModel
     } = body
-
-    if (pwd && pwd !== password) {
-      throw new Error("密码错误，请联系网站管理员。")
+    //这里增加获取密码的请求
+    console.log(
+      dateFormat(new Date()) +
+        " 用户使用密码: " +
+        password +
+        " 访问本站,开始检查密码"
+    )
+    const userapiurl = import.meta.env.USERAPI_URL
+    let userpasswords: any[]
+    if (userapiurl) {
+      const response = await fetch(userapiurl)
+      userpasswords = await response.json()
+      const result = userpasswords.find(item => item === password)
+      if (!result) {
+        throw new Error("您的密码错误，请联系网站管理员。")
+      }
+    } else {
+      const response = await fetch("http://localhost:3001/getuserpassword")
+      userpasswords = await response.json()
+      const result = userpasswords.find(item => item === password)
+      if (!result) {
+        throw new Error("您的密码错误，请联系网站管理员。")
+      }
     }
 
     if (!messages?.length) {
