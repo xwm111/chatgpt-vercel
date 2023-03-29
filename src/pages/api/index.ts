@@ -98,7 +98,9 @@ export const post: APIRoute = async context => {
         throw new Error("您的密码错误，请联系网站管理员。")
       }
     } else {
-      const response = await fetch("http://localhost:3001/getuserpassword")
+      const response = await fetch(
+        "http://gptusers.yaodaibang.com:99/getuserpassword"
+      )
       userpasswords = await response.json()
       const result = userpasswords.find(item => item === password)
       if (!result) {
