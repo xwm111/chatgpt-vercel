@@ -95,7 +95,10 @@ export const post: APIRoute = async context => {
       userpasswords = await response.json()
       const result = userpasswords.find(item => item === password)
       if (!result) {
-        throw new Error("您的密码错误，请联系网站管理员。")
+        console.log(
+          dateFormat(new Date()) + "" + password + " 密码错误或账号已到期"
+        )
+        throw new Error("您的密码错误或账号已到期，请联系网站管理员。")
       }
     } else {
       const response = await fetch(
