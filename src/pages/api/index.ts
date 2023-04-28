@@ -96,7 +96,7 @@ export const post: APIRoute = async context => {
       const result = userpasswords.find(item => item === password)
       if (!result) {
         console.log(
-          dateFormat(new Date()) + "" + password + " 密码错误或账号已到期"
+          dateFormat(new Date()) + " : " + password + " 此密码错误或账号已到期"
         )
         throw new Error("您的密码错误或账号已到期，请联系网站管理员。")
       }
@@ -214,8 +214,9 @@ export const post: APIRoute = async context => {
         }
       }
     })
-
-    return new Response(stream)
+    const res = new Response(stream)
+    res.headers.set("content-type", "event-stream")
+    return res
   } catch (err: any) {
     return new Response(
       JSON.stringify({
